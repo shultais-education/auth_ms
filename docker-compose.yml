@@ -1,0 +1,21 @@
+services:
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: auth-ms-app
+    ports:
+      - "8030:8000"    # внешний и внутренний порты
+    env_file:
+      - .env
+    working_dir: /
+    command: >
+      sh -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
